@@ -6,17 +6,17 @@
 //*************											******//
 //************************************************************//
 
-/*USO DE LA FUNCIÓN prisma(); CON VALOR DADO
+/*USO DE LA FUNCIÓN prismaCustom(); CON VALOR DADO
   Se dan los tres valores de (flotante ancho, flotante altura, flotante profundidad)
-  De tal forma que su uso sería void prisma(float ancho, float altura, float profundidad)
+  De tal forma que su uso sería void prismaCustom(float ancho, float altura, float profundidad)
   valorx = ancho
   valory = altura
   valorz = profundidad
   Ejemplo;
-  prisma(2,2,3) //Creará un prima con un ancho de 2 altura de 2 y una profundidad de 3.
-  prisma(1,4,4) //Creará un prima con un ancho de 1 altura de 4 y una profundidad de 4.
+  prismaCustom(2,2,3) //Creará un prima con un ancho de 2 altura de 2 y una profundidad de 3.
+  prismaCustom(1,4,4) //Creará un prima con un ancho de 1 altura de 4 y una profundidad de 4.
   Se pueden usar valores flotantes.
-  prima(1.5,1.5,3.0) nos dará un prisma con esos valores flotantes.
+  primaCustom(1.5,1.5,3.0) nos dará un prisma con esos valores flotantes.
 */
 
 //#include <gl/gl.h>     // The GL Header File
@@ -45,7 +45,7 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
-void prisma(float valorx,float valory, float valorz)
+void prismaCustom(float valorx,float valory, float valorz)
 {
 	GLfloat vertice [8][3] = {
 				{valorx/2,-valory/2, valorz/2},    //Coordenadas Vértice 0 V0
@@ -120,7 +120,7 @@ void display(void)   // Creamos la funcion donde se dibuja
 	glRotatef(angleY, 0, 1, 0);
 	glTranslatef(transX, transY, transZ);
 	
-	prisma(2.5,1.5,3.0);
+	prismaCustom(2.5,1.5,3.0);
 	
 	glutSwapBuffers ( );
     //glFlush();
