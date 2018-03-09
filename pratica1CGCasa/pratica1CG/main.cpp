@@ -1,38 +1,20 @@
 //Semestre 2018 - 2
 //************************************************************//
 //************************************************************//
-//************** Alumno (s): Moreno Marín Christian    *******//
-//*************				Visual 2017					******//
+//************** Alumno (s):Moreno Marin Christian      ******//
 //*************											******//
+//*************		Visual 2017							******//
 //************************************************************//
-
-/*USO DE LA FUNCIÓN prismaCustom(); CON VALOR DADO
-  Se dan los tres valores de (flotante ancho, flotante altura, flotante profundidad)
-  De tal forma que su uso sería void prismaCustom(float ancho, float altura, float profundidad)
-  valorx = ancho
-  valory = altura
-  valorz = profundidad
-  Ejemplo;
-  prismaCustom(2,2,3) //Creará un prima con un ancho de 2 altura de 2 y una profundidad de 3.
-  prismaCustom(1,4,4) //Creará un prima con un ancho de 1 altura de 4 y una profundidad de 4.
-  Se pueden usar valores flotantes.
-  primaCustom(1.5,1.5,3.0) nos dará un prisma con esos valores flotantes.
-*/
-
-//#include <gl/gl.h>     // The GL Header File
-//#include <GL/glut.h>   // The GL Utility Toolkit (Glut) Header
-//#include <stdlib.h>
 #include "Main.h"
 
-float angleX = 0.0f;
-float angleY = 0.0f;
-float angleZ = 0.0f;
-float transX = 0.0f;
-float transY = 0.0f;
 float transZ = -5.0f;
+int screenW = 0.0;
+int screenH = 0.0;
+float roty = 0.0;
+float rotx = 0.0;
 
 
-void InitGL ( GLvoid )     // Inicializamos parametros
+void InitGL ( void )     // Inicializamos parametros
 {
 
 	//glShadeModel(GL_SMOOTH);							// Habilitamos Smooth Shading
@@ -45,86 +27,182 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
-void prismaCustom(float valorx,float valory, float valorz)
+void prismaCustom(float valorx, float valory, float valorz)
 {
-	GLfloat vertice [8][3] = {
-				{valorx/2,-valory/2, valorz/2},    //Coordenadas Vértice 0 V0
-				{-valorx/2 ,-valory/2, valorz/2},    //Coordenadas Vértice 1 V1
-				{-valorx/2,-valory/2, -valorz/2},    //Coordenadas Vértice 2 V2
-				{valorx/2 ,-valory/2, -valorz/2},    //Coordenadas Vértice 3 V3
-				{valorx/2 ,valory/2, valorz/2},    //Coordenadas Vértice 4 V4
-				{valorx/2,valory/2, -valorz/2},    //Coordenadas Vértice 5 V5
-				{-valorx/2 ,valory/2, -valorz/2},    //Coordenadas Vértice 6 V6
-				{-valorx/2 ,valory/2, valorz/2},    //Coordenadas Vértice 7 V7
-				};
+	GLfloat vertice[8][3] = {
+		{ valorx / 2,-valory / 2, valorz / 2 },    //Coordenadas Vértice 0 V0
+	{ -valorx / 2 ,-valory / 2, valorz / 2 },    //Coordenadas Vértice 1 V1
+	{ -valorx / 2,-valory / 2, -valorz / 2 },    //Coordenadas Vértice 2 V2
+	{ valorx / 2 ,-valory / 2, -valorz / 2 },    //Coordenadas Vértice 3 V3
+	{ valorx / 2 ,valory / 2, valorz / 2 },    //Coordenadas Vértice 4 V4
+	{ valorx / 2,valory / 2, -valorz / 2 },    //Coordenadas Vértice 5 V5
+	{ -valorx / 2 ,valory / 2, -valorz / 2 },    //Coordenadas Vértice 6 V6
+	{ -valorx / 2 ,valory / 2, valorz / 2 },    //Coordenadas Vértice 7 V7
+	};
 
 
-		glBegin(GL_POLYGON);	//Front
-			glColor3f(1.0,0.0,0.0);
-			glVertex3fv(vertice[0]);
-			glVertex3fv(vertice[4]);
-			glVertex3fv(vertice[7]);
-			glVertex3fv(vertice[1]);
-		glEnd();
+	glBegin(GL_POLYGON);	//Front
+	//glColor3f(1.0, 0.0, 0.0);
+	glVertex3fv(vertice[0]);
+	glVertex3fv(vertice[4]);
+	glVertex3fv(vertice[7]);
+	glVertex3fv(vertice[1]);
+	glEnd();
 
-		glBegin(GL_POLYGON);	//Right
-			glColor3f(0.0,0.0,1.0);
-			glVertex3fv(vertice[0]);
-			glVertex3fv(vertice[3]);
-			glVertex3fv(vertice[5]);
-			glVertex3fv(vertice[4]);
-		glEnd();
+	glBegin(GL_POLYGON);	//Right
+	//glColor3f(0.0, 0.0, 1.0);
+	glVertex3fv(vertice[0]);
+	glVertex3fv(vertice[3]);
+	glVertex3fv(vertice[5]);
+	glVertex3fv(vertice[4]);
+	glEnd();
 
-		glBegin(GL_POLYGON);	//Back
-			glColor3f(0.0,1.0,0.0);
-			glVertex3fv(vertice[6]);
-			glVertex3fv(vertice[5]);
-			glVertex3fv(vertice[3]);
-			glVertex3fv(vertice[2]);
-		glEnd();
+	glBegin(GL_POLYGON);	//Back
+	//glColor3f(0.0, 1.0, 0.0);
+	glVertex3fv(vertice[6]);
+	glVertex3fv(vertice[5]);
+	glVertex3fv(vertice[3]);
+	glVertex3fv(vertice[2]);
+	glEnd();
 
-		glBegin(GL_POLYGON);  //Left
-			glColor3f(1.0,1.0,1.0);
-			glVertex3fv(vertice[1]);
-			glVertex3fv(vertice[7]);
-			glVertex3fv(vertice[6]);
-			glVertex3fv(vertice[2]);
-		glEnd();
+	glBegin(GL_POLYGON);  //Left
+	//glColor3f(1.0, 1.0, 1.0);
+	glVertex3fv(vertice[1]);
+	glVertex3fv(vertice[7]);
+	glVertex3fv(vertice[6]);
+	glVertex3fv(vertice[2]);
+	glEnd();
 
-		glBegin(GL_POLYGON);  //Bottom
-	
-		glColor3f(0.4,0.2,0.6);
-			glVertex3fv(vertice[0]);
-			glVertex3fv(vertice[1]);
-			glVertex3fv(vertice[2]);
-			glVertex3fv(vertice[3]);
-		glEnd();
+	glBegin(GL_POLYGON);  //Bottom
 
-		glBegin(GL_POLYGON);  //Top
-			glColor3f(0.8,0.2,0.4);
-			glVertex3fv(vertice[4]);
-			glVertex3fv(vertice[5]);
-			glVertex3fv(vertice[6]);
-			glVertex3fv(vertice[7]);
-		glEnd();
+	//glColor3f(0.4, 0.2, 0.6);
+	glVertex3fv(vertice[0]);
+	glVertex3fv(vertice[1]);
+	glVertex3fv(vertice[2]);
+	glVertex3fv(vertice[3]);
+	glEnd();
+
+	glBegin(GL_POLYGON);  //Top
+	//glColor3f(0.8, 0.2, 0.4);
+	glVertex3fv(vertice[4]);
+	glVertex3fv(vertice[5]);
+	glVertex3fv(vertice[6]);
+	glVertex3fv(vertice[7]);
+	glEnd();
 }
 
-void display(void)   // Creamos la funcion donde se dibuja
+void display ( void )   // Creamos la funcion donde se dibuja
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Limiamos pantalla y Depth Buffer
-	glMatrixMode(GL_MODELVIEW);
+	//glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	//Poner Código Aquí.
-	glRotatef(angleX, 1, 0, 0);
-	glRotatef(angleY, 0, 1, 0);
-	glTranslatef(transX, transY, transZ);
-	
-	prismaCustom(2.5,1.5,3.0);
-	
-	glutSwapBuffers ( );
-    //glFlush();
-    // Swap The Buffers
+		glTranslatef(0.0f, 0.0f, transZ);
+		glRotatef(roty, 0, 1, 0);
+		glRotatef(rotx, 1, 0, 0);
+		//Poner Código Aquí.
+		//Cuerpo perro
+		glPushMatrix();
+			glColor3f(0.651,0.370,0.18);
+			prismaCustom(7,4,5);
+		glPopMatrix();
+
+
+		//Pata superior izquierda
+		glTranslatef(-2.5, -3, 1.5);
+		glColor3f(0.4745, 0.3334, 0.24);
+		glPushMatrix();
+			prismaCustom(2,2,2);
+		glPopMatrix();
+
+		//Pata superior derecha
+		glTranslatef(0, 0, -3);
+		glColor3f(0.4745, 0.3334, 0.24);
+		glPushMatrix();
+		prismaCustom(2,2,2);
+		glPopMatrix();
+
+		//Pata inferior derecha
+		glTranslatef(5, 0, 0);
+		glColor3f(0.4745, 0.3334, 0.24);
+		glPushMatrix();
+		prismaCustom(2, 2, 2);
+		glPopMatrix();
+
+		//Pata inferior izquierda
+		glTranslatef(0, 0, 3);
+		glColor3f(0.4745, 0.3334, 0.24);
+		glPushMatrix();
+		prismaCustom(2, 2, 2);
+		glPopMatrix();
+
+		//Cola superior
+		glTranslatef(2, 4.5, -1.5);
+		glColor3f(0.651, 0.370, 0.18);
+		glPushMatrix();
+		prismaCustom(2, 1, 1);
+		glPopMatrix();
+
+		//Cola intermedia
+		glTranslatef(1, -1, 0);
+		glColor3f(0.651, 0.370, 0.18);
+		glPushMatrix();
+		prismaCustom(2, 1, 1);
+		glPopMatrix();
+
+		//Cola baja
+		glTranslatef(1, -1, 0);
+		glColor3f(0.306,0.2314,0.1922);
+		glPushMatrix();
+		prismaCustom(2, 1, 1);
+		glPopMatrix();
+
+		//Cabeza
+		glTranslatef(-8.5, 4, 0);
+		glColor3f(0.651, 0.370, 0.18);
+		glPushMatrix();
+		prismaCustom(3, 3, 3);
+		glPopMatrix();
+
+		//Trompa
+		glTranslatef(-2, -0.5, 0);
+		glColor3f(0.4745,0.3334,0.24);
+		glPushMatrix();
+		prismaCustom(1, 2, 3);
+		glPopMatrix();
+
+		//Nariz
+		glTranslatef(-1, 0.5, 0);
+		glColor3f(0.306, 0.2314, 0.1922);
+		glPushMatrix();
+		prismaCustom(1, 1, 1);
+		glPopMatrix();
+
+		//Oreja Izquierda
+		glTranslatef(3, 0.5, 2);
+		glColor3f(0.4745, 0.3334, 0.24);
+		glPushMatrix();
+		prismaCustom(1, 2, 1);
+		glPopMatrix();
+
+		//Oreja Derecha
+		glTranslatef(0, 0, -4);
+		glColor3f(0.4745, 0.3334, 0.24);
+		glPushMatrix();
+		prismaCustom(1, 2, 1);
+		glPopMatrix();
+
+		
+		
+
+
+
+
+
+		
+  											
+  glutSwapBuffers ( );
+  // Swap The Buffers
 }
 
 void reshape ( int width , int height )   // Creamos funcion Reshape
@@ -140,59 +218,54 @@ void reshape ( int width , int height )   // Creamos funcion Reshape
 	glLoadIdentity();
 
 	// Tipo de Vista
-	glOrtho(-10,10,-10,10,0.1,20);	
-	//glFrustum (-2,2,-2,1,0.6, 80.0);
+	//glOrtho(-5,5,-5,5,0.2,20);	
+	glFrustum (-0.1, 0.1,-0.1, 0.1, 0.1, 100.0);
+
+	glMatrixMode(GL_MODELVIEW);							// Seleccionamos Modelview Matrix
 }
 
 void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 {
 	switch ( key ) {
-	
 		case 'w':
 		case 'W':
-			transY +=0.2f;
-			printf("Posicion en Y: %f\n", transY);
+			transZ +=0.3f;
 			break;
 		case 's':
 		case 'S':
-			transY -=0.2f;
-			printf("Posicion en Y: %f\n", transY);
+			transZ -= 0.3f;
 			break;
 		case 'a':
 		case 'A':
-			transX -=0.2f;
+			
 			break;
 		case 'd':
 		case 'D':
-			transX +=0.2f;
+	
 			break;
 		case 27:        // Cuando Esc es presionado...
 			exit ( 0 );   // Salimos del programa
 		break;        
 		default:        // Cualquier otra
 		break;
-	}
+  }
 	glutPostRedisplay();
 }
 
 void arrow_keys ( int a_keys, int x, int y )  // Funcion para manejo de teclas especiales (arrow keys)
 {
   switch ( a_keys ) {
-    case GLUT_KEY_UP:     // Presionamos tecla ARRIBA...
-		angleX += 1.0f;
+    case GLUT_KEY_UP:		// Presionamos tecla ARRIBA...
+		rotx += 1;
 		break;
-      //glutFullScreen ( ); // Full Screen Mode
-      //break;
-    case GLUT_KEY_DOWN:               // Presionamos tecla ABAJO...
-		angleX -= 1.0f;
+    case GLUT_KEY_DOWN:		// Presionamos tecla ABAJO...
+		rotx -= 1;
 		break;
-      //glutReshapeWindow ( 500, 500 ); // Cambiamos tamano de Ventana
-      //break;
 	case GLUT_KEY_LEFT:
-		angleY += 1.0f;
+		roty -= 1;
 		break;
 	case GLUT_KEY_RIGHT:
-		angleY -= 1.0f;
+		roty += 1;
 		break;
     default:
       break;
@@ -206,9 +279,13 @@ int main ( int argc, char** argv )   // Main Function
   glutInit            (&argc, argv); // Inicializamos OpenGL
   //glutInitDisplayMode (GLUT_RGBA | GLUT_SINGLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Sencillo )
   glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); // Display Mode (Clores RGB y alpha | Buffer Doble )
+  screenW = glutGet(GLUT_SCREEN_WIDTH);
+  screenH = glutGet(GLUT_SCREEN_HEIGHT);
   glutInitWindowSize  (500, 500);	// Tamaño de la Ventana
   glutInitWindowPosition (0, 0);	//Posicion de la Ventana
-  glutCreateWindow    ("Practica 3"); // Nombre de la Ventana
+  glutCreateWindow    ("Practica 4"); // Nombre de la Ventana
+  printf("Resolution H: %i \n", screenW);
+  printf("Resolution V: %i \n", screenH);
   InitGL ();						// Parametros iniciales de la aplicacion
   glutDisplayFunc     ( display );  //Indicamos a Glut función de dibujo
   glutReshapeFunc     ( reshape );	//Indicamos a Glut función en caso de cambio de tamano
