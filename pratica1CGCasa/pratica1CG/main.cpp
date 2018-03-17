@@ -5,9 +5,33 @@
 //*************											******//
 //*************		Visual 2017							******//
 //************************************************************//
+
+/*Teclas para mover partes del brazo minúsculas mueven hacia un lado mayusculas al otro.
+H mueve el hombro
+C mueve el codo
+M mueve la muñeca
+J mueve el dedo Pulgar
+U mueve el dedo Indice
+I mueve el dedo Medio
+O mueve el dedo anular
+P mueve el dedo Meñique
+
+LOS BRAZOS Y LOS DEDOS SE MUEVEN SIMETRICAMENTE*/
 #include "Main.h"
 
+float angHombro = 0.0f;
+float angCodo = 0.0f;
+float angMuñeca = 0.0f;
+float angIndice = 0.0f;
+float angMedio = 0.0f;
+float angAnular = 0.0f;
+float angMeñique = 0.0f;
+float angPulgar = 0.0f;
+
 float transZ = -5.0f;
+float transX = 0.0f;
+float angleX = 0.0f;
+float angleY = 0.0f;
 int screenW = 0.0;
 int screenH = 0.0;
 float roty = 0.0;
@@ -27,68 +51,476 @@ void InitGL ( void )     // Inicializamos parametros
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
-void prismaCustom(float valorx, float valory, float valorz)
+void prisma(void)
 {
-	GLfloat vertice[8][3] = {
-		{ valorx / 2,-valory / 2, valorz / 2 },    //Coordenadas Vértice 0 V0
-	{ -valorx / 2 ,-valory / 2, valorz / 2 },    //Coordenadas Vértice 1 V1
-	{ -valorx / 2,-valory / 2, -valorz / 2 },    //Coordenadas Vértice 2 V2
-	{ valorx / 2 ,-valory / 2, -valorz / 2 },    //Coordenadas Vértice 3 V3
-	{ valorx / 2 ,valory / 2, valorz / 2 },    //Coordenadas Vértice 4 V4
-	{ valorx / 2,valory / 2, -valorz / 2 },    //Coordenadas Vértice 5 V5
-	{ -valorx / 2 ,valory / 2, -valorz / 2 },    //Coordenadas Vértice 6 V6
-	{ -valorx / 2 ,valory / 2, valorz / 2 },    //Coordenadas Vértice 7 V7
-	};
+	GLfloat vertice [8][3] = {
+				{0.5 ,-0.5, 0.5},    //Coordenadas Vértice 0 V0
+				{-0.5 ,-0.5, 0.5},    //Coordenadas Vértice 1 V1
+				{-0.5 ,-0.5, -0.5},    //Coordenadas Vértice 2 V2
+				{0.5 ,-0.5, -0.5},    //Coordenadas Vértice 3 V3
+				{0.5 ,0.5, 0.5},    //Coordenadas Vértice 4 V4
+				{0.5 ,0.5, -0.5},    //Coordenadas Vértice 5 V5
+				{-0.5 ,0.5, -0.5},    //Coordenadas Vértice 6 V6
+				{-0.5 ,0.5, 0.5},    //Coordenadas Vértice 7 V7
+				};
+
+		glBegin(GL_POLYGON);	//Front
+			//glColor3f(1.0,0.0,0.0);
+			glVertex3fv(vertice[0]);
+			glVertex3fv(vertice[4]);
+			glVertex3fv(vertice[7]);
+			glVertex3fv(vertice[1]);
+		glEnd();
+
+		glBegin(GL_POLYGON);	//Right
+			//glColor3f(0.0,0.0,1.0);
+			glVertex3fv(vertice[0]);
+			glVertex3fv(vertice[3]);
+			glVertex3fv(vertice[5]);
+			glVertex3fv(vertice[4]);
+		glEnd();
+
+		glBegin(GL_POLYGON);	//Back
+			//glColor3f(0.0,1.0,0.0);
+			glVertex3fv(vertice[6]);
+			glVertex3fv(vertice[5]);
+			glVertex3fv(vertice[3]);
+			glVertex3fv(vertice[2]);
+		glEnd();
+
+		glBegin(GL_POLYGON);  //Left
+			//glColor3f(1.0,1.0,1.0);
+			glVertex3fv(vertice[1]);
+			glVertex3fv(vertice[7]);
+			glVertex3fv(vertice[6]);
+			glVertex3fv(vertice[2]);
+		glEnd();
+
+		glBegin(GL_POLYGON);  //Bottom
+			//glColor3f(0.4,0.2,0.6);
+			glVertex3fv(vertice[0]);
+			glVertex3fv(vertice[1]);
+			glVertex3fv(vertice[2]);
+			glVertex3fv(vertice[3]);
+		glEnd();
+
+		glBegin(GL_POLYGON);  //Top
+			//glColor3f(0.8,0.2,0.4);
+			glVertex3fv(vertice[4]);
+			glVertex3fv(vertice[5]);
+			glVertex3fv(vertice[6]);
+			glVertex3fv(vertice[7]);
+		glEnd();
+}
+
+void brazoDerecho() {
+	//Hombro----------------------------------------------------------------------------------
+	glRotatef(angHombro, 0, 0, 1);
+	glPushMatrix();
+	glScalef(1, 2, 2);
+	glColor3f(1, 1, 1);
+	prisma();
+	glPopMatrix();
+
+	//Bicep
+
+	glPushMatrix();
+	glTranslatef(2, 0, 0);
+	glScalef(3, 2, 2);
+	glColor3f(0, 0, 1);
+	prisma();
+	glPopMatrix();
+
+	//Codo--------------------------------------------------------------------------------------
+	glTranslatef(3.75, 0, 0);
+	glRotatef(-angCodo, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 2, 2);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+
+	//Antebrazo
+	glTranslatef(2.25, 0, 0);
+	glPushMatrix();
+	glScalef(4, 2, 2);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Muñeca--------------------------------------------------------------------------------------
+	glRotatef(-angMuñeca, 1, 0, 0);
+	glTranslatef(2.25, 0, 0);
+	glPushMatrix();
+	glScalef(0.5, 2, 2);
+	glColor3f(1, 1, 1);
+	prisma();
+	glPopMatrix();
+
+	//Mano
+	glTranslatef(1.25, 0, 0);
+	glPushMatrix();
+	glScalef(2, 2, 1);
+	glColor3f(0, 0, 1);
+	prisma();
+	glPopMatrix();
+
+	//Dedo pulgar---------------------------------------------------------------------------------------
+	glPushMatrix();
+	//Falange1
+	glTranslatef(0, 1.25, 0);
+	glRotatef(-angPulgar, 1, 0, 0);
+	glPushMatrix();
+	glScalef(0.4, 0.5, 0.4);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange2
+	glTranslatef(0, 0.5, 0);
+	glRotatef(-angPulgar, 1, 0, 0);
+	glPushMatrix();
+	glScalef(0.4, 0.5, 0.4);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+	glPopMatrix();////////////////////////////////////
 
 
-	glBegin(GL_POLYGON);	//Front
-	//glColor3f(1.0, 0.0, 0.0);
-	glVertex3fv(vertice[0]);
-	glVertex3fv(vertice[4]);
-	glVertex3fv(vertice[7]);
-	glVertex3fv(vertice[1]);
-	glEnd();
 
-	glBegin(GL_POLYGON);	//Right
-	//glColor3f(0.0, 0.0, 1.0);
-	glVertex3fv(vertice[0]);
-	glVertex3fv(vertice[3]);
-	glVertex3fv(vertice[5]);
-	glVertex3fv(vertice[4]);
-	glEnd();
+	//Dedo indice--------------------------------------------------------------------------------
+	glPushMatrix();
+	//Falange1
+	glTranslatef(1.25, 0.85, 0);
+	glRotatef(-angIndice, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
 
-	glBegin(GL_POLYGON);	//Back
-	//glColor3f(0.0, 1.0, 0.0);
-	glVertex3fv(vertice[6]);
-	glVertex3fv(vertice[5]);
-	glVertex3fv(vertice[3]);
-	glVertex3fv(vertice[2]);
-	glEnd();
+	//Falange2
+	glTranslatef(0.5, 0, 0);
+	glRotatef(-angIndice, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
 
-	glBegin(GL_POLYGON);  //Left
-	//glColor3f(1.0, 1.0, 1.0);
-	glVertex3fv(vertice[1]);
-	glVertex3fv(vertice[7]);
-	glVertex3fv(vertice[6]);
-	glVertex3fv(vertice[2]);
-	glEnd();
+	//Falange3
+	glTranslatef(0.5, 0, 0);
+	glRotatef(-angIndice, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+	glPopMatrix();//////////////////////////////////////
 
-	glBegin(GL_POLYGON);  //Bottom
 
-	//glColor3f(0.4, 0.2, 0.6);
-	glVertex3fv(vertice[0]);
-	glVertex3fv(vertice[1]);
-	glVertex3fv(vertice[2]);
-	glVertex3fv(vertice[3]);
-	glEnd();
 
-	glBegin(GL_POLYGON);  //Top
-	//glColor3f(0.8, 0.2, 0.4);
-	glVertex3fv(vertice[4]);
-	glVertex3fv(vertice[5]);
-	glVertex3fv(vertice[6]);
-	glVertex3fv(vertice[7]);
-	glEnd();
+	//Dedo medio--------------------------------------------------------------------------------------
+	glPushMatrix();
+	//Falange1 medio
+	glTranslatef(2.25, 0.85, 0);
+	glTranslatef(-1, -0.6, 0);
+	glRotatef(-angMedio, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange2 medio
+	glTranslatef(0.55, 0, 0);
+	glRotatef(-angMedio, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.6, 0.3, 0.3);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange3 medio
+	glTranslatef(0.6, 0, 0);
+	glRotatef(-angMedio, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.6, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+	glPopMatrix();////////////////////////////////////
+
+
+
+				  //Dedo Anular-----------------------------------------------------------------------------------------
+	glPushMatrix();
+	//Falange1 Anular
+	glTranslatef(2.4, 0.25, 0);
+	glTranslatef(-1.15, -0.6, 0);
+	glRotatef(-angAnular, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange2 Anular
+	glTranslatef(0.5, 0, 0);
+	glRotatef(-angAnular, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange3 Anular
+	glTranslatef(0.5, 0, 0);
+	glRotatef(-angAnular, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+	glPopMatrix();/////////////////////////////////////////
+
+
+
+				  //Dedo Meñique-----------------------------------------------------------------------------------
+	glPushMatrix();
+	//Falange1 Meñique
+	glTranslatef(2.25, -0.35, 0);
+	glTranslatef(-1, -0.5, 0);
+	glRotatef(-angMeñique, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange2 Meñique
+	glTranslatef(0.4, 0, 0);
+	glRotatef(-angMeñique, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.3, 0.3, 0.3);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange3 Meñique
+	glTranslatef(0.25, 0, 0);
+	glRotatef(-angMeñique, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.2, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+	glPopMatrix();
+}
+
+void brazoIzquierdo() {
+	//Hombro----------------------------------------------------------------------------------
+	glRotatef(angHombro, 0, 0, 1);
+	glPushMatrix();
+	glScalef(1, 2, 2);
+	glColor3f(1, 1, 1);
+	prisma();
+	glPopMatrix();
+
+	//Bicep
+
+	glPushMatrix();
+	glTranslatef(2, 0, 0);
+	glScalef(3, 2, 2);
+	glColor3f(0, 0, 1);
+	prisma();
+	glPopMatrix();
+
+	//Codo--------------------------------------------------------------------------------------
+	glTranslatef(3.75, 0, 0);
+	glRotatef(angCodo, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 2, 2);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+
+	//Antebrazo
+	glTranslatef(2.25, 0, 0);
+	glPushMatrix();
+	glScalef(4, 2, 2);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Muñeca--------------------------------------------------------------------------------------
+	glRotatef(angMuñeca, 1, 0, 0);
+	glTranslatef(2.25, 0, 0);
+	glPushMatrix();
+	glScalef(0.5, 2, 2);
+	glColor3f(1, 1, 1);
+	prisma();
+	glPopMatrix();
+
+	//Mano
+	glTranslatef(1.25, 0, 0);
+	glPushMatrix();
+	glScalef(2, 2, 1);
+	glColor3f(0, 0, 1);
+	prisma();
+	glPopMatrix();
+
+	//Dedo pulgar---------------------------------------------------------------------------------------
+	glPushMatrix();
+	//Falange1
+	glTranslatef(0, 1.25, 0);
+	glRotatef(angPulgar, 1, 0, 0);
+	glPushMatrix();
+	glScalef(0.4, 0.5, 0.4);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange2
+	glTranslatef(0, 0.5, 0);
+	glRotatef(angPulgar, 1, 0, 0);
+	glPushMatrix();
+	glScalef(0.4, 0.5, 0.4);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+	glPopMatrix();////////////////////////////////////
+
+
+
+				  //Dedo indice--------------------------------------------------------------------------------
+	glPushMatrix();
+	//Falange1
+	glTranslatef(1.25, 0.85, 0);
+	glRotatef(angIndice, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange2
+	glTranslatef(0.5, 0, 0);
+	glRotatef(angIndice, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange3
+	glTranslatef(0.5, 0, 0);
+	glRotatef(angIndice, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+	glPopMatrix();//////////////////////////////////////
+
+
+
+				  //Dedo medio--------------------------------------------------------------------------------------
+	glPushMatrix();
+	//Falange1 medio
+	glTranslatef(2.25, 0.85, 0);
+	glTranslatef(-1, -0.6, 0);
+	glRotatef(angMedio, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange2 medio
+	glTranslatef(0.55, 0, 0);
+	glRotatef(angMedio, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.6, 0.3, 0.3);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange3 medio
+	glTranslatef(0.6, 0, 0);
+	glRotatef(angMedio, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.6, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+	glPopMatrix();////////////////////////////////////
+
+
+
+				  //Dedo Anular-----------------------------------------------------------------------------------------
+	glPushMatrix();
+	//Falange1 Anular
+	glTranslatef(2.4, 0.25, 0);
+	glTranslatef(-1.15, -0.6, 0);
+	glRotatef(angAnular, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange2 Anular
+	glTranslatef(0.5, 0, 0);
+	glRotatef(angAnular, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange3 Anular
+	glTranslatef(0.5, 0, 0);
+	glRotatef(angAnular, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+	glPopMatrix();/////////////////////////////////////////
+
+
+
+				  //Dedo Meñique-----------------------------------------------------------------------------------
+	glPushMatrix();
+	//Falange1 Meñique
+	glTranslatef(2.25, -0.35, 0);
+	glTranslatef(-1, -0.5, 0);
+	glRotatef(angMeñique, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.5, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange2 Meñique
+	glTranslatef(0.4, 0, 0);
+	glRotatef(angMeñique, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.3, 0.3, 0.3);
+	glColor3f(1, 0, 0);
+	prisma();
+	glPopMatrix();
+
+	//Falange3 Meñique
+	glTranslatef(0.25, 0, 0);
+	glRotatef(angMeñique, 0, -1, 0);
+	glPushMatrix();
+	glScalef(0.2, 0.3, 0.3);
+	glColor3f(0, 1, 0);
+	prisma();
+	glPopMatrix();
+	glPopMatrix();
 }
 
 void display ( void )   // Creamos la funcion donde se dibuja
@@ -101,98 +533,124 @@ void display ( void )   // Creamos la funcion donde se dibuja
 		glRotatef(roty, 0, 1, 0);
 		glRotatef(rotx, 1, 0, 0);
 		//Poner Código Aquí.
-		//Cuerpo perro
+		//cabeza
 		glPushMatrix();
-			glColor3f(0.651,0.370,0.18);
-			prismaCustom(7,4,5);
+			glColor3f(1,0,0);
+			glScalef(4, 4, 4);
+			prisma();
 		glPopMatrix();
 
 
-		//Pata superior izquierda
-		glTranslatef(-2.5, -3, 1.5);
-		glColor3f(0.4745, 0.3334, 0.24);
+		//cuello
+		glTranslatef(0, -3, 0);
+		glColor3f(0, 1, 0);
 		glPushMatrix();
-			prismaCustom(2,2,2);
+			glScalef(3, 2, 3);
+			prisma();
 		glPopMatrix();
-
-		//Pata superior derecha
-		glTranslatef(0, 0, -3);
-		glColor3f(0.4745, 0.3334, 0.24);
-		glPushMatrix();
-		prismaCustom(2,2,2);
-		glPopMatrix();
-
-		//Pata inferior derecha
-		glTranslatef(5, 0, 0);
-		glColor3f(0.4745, 0.3334, 0.24);
-		glPushMatrix();
-		prismaCustom(2, 2, 2);
-		glPopMatrix();
-
-		//Pata inferior izquierda
-		glTranslatef(0, 0, 3);
-		glColor3f(0.4745, 0.3334, 0.24);
-		glPushMatrix();
-		prismaCustom(2, 2, 2);
-		glPopMatrix();
-
-		//Cola superior
-		glTranslatef(2, 4.5, -1.5);
-		glColor3f(0.651, 0.370, 0.18);
-		glPushMatrix();
-		prismaCustom(2, 1, 1);
-		glPopMatrix();
-
-		//Cola intermedia
-		glTranslatef(1, -1, 0);
-		glColor3f(0.651, 0.370, 0.18);
-		glPushMatrix();
-		prismaCustom(2, 1, 1);
-		glPopMatrix();
-
-		//Cola baja
-		glTranslatef(1, -1, 0);
-		glColor3f(0.306,0.2314,0.1922);
-		glPushMatrix();
-		prismaCustom(2, 1, 1);
-		glPopMatrix();
-
-		//Cabeza
-		glTranslatef(-8.5, 4, 0);
-		glColor3f(0.651, 0.370, 0.18);
-		glPushMatrix();
-		prismaCustom(3, 3, 3);
-		glPopMatrix();
-
-		//Trompa
-		glTranslatef(-2, -0.5, 0);
-		glColor3f(0.4745,0.3334,0.24);
-		glPushMatrix();
-		prismaCustom(1, 2, 3);
-		glPopMatrix();
-
-		//Nariz
-		glTranslatef(-1, 0.5, 0);
-		glColor3f(0.306, 0.2314, 0.1922);
-		glPushMatrix();
-		prismaCustom(1, 1, 1);
-		glPopMatrix();
-
-		//Oreja Izquierda
-		glTranslatef(3, 0.5, 2);
-		glColor3f(0.4745, 0.3334, 0.24);
-		glPushMatrix();
-		prismaCustom(1, 2, 1);
-		glPopMatrix();
-
-		//Oreja Derecha
-		glTranslatef(0, 0, -4);
-		glColor3f(0.4745, 0.3334, 0.24);
-		glPushMatrix();
-		prismaCustom(1, 2, 1);
-		glPopMatrix();
-
 		
+
+		//torso
+		glTranslatef(0, -6, 0);
+		glColor3f(0, 0, 1);
+		glPushMatrix();
+			glScalef(10, 10, 4);
+			prisma();
+		glPopMatrix();
+
+		//pierna izquierda
+		//muslo
+		glTranslatef(2.5, -7.5, 0);
+		glColor3f(0, 1, 0);
+		glPushMatrix();
+		glScalef(2, 5, 2);
+		prisma();
+		glPopMatrix();
+
+		//rodilla
+		glTranslatef(0, -3, 0);
+		glColor3f(1, 0, 0);
+		glPushMatrix();
+		glScalef(2, 1, 2);
+		prisma();
+		glPopMatrix();
+		
+		//Espinilla
+		glTranslatef(0, -3, 0);
+		glColor3f(0, 0, 1);
+		glPushMatrix();
+		glScalef(2, 5, 2);
+		prisma();
+		glPopMatrix();
+
+		//Tobillo
+		glTranslatef(0, -2.75, 0);
+		glColor3f(1, 0, 0);
+		glPushMatrix();
+		glScalef(2, 0.5, 2);
+		prisma();
+		glPopMatrix();
+
+		//Pie
+		glTranslatef(0, -1.25, 1);
+		glColor3f(0, 1, 0);
+		glPushMatrix();
+		glScalef(2, 2, 4);
+		prisma();
+		glPopMatrix();
+
+		//Pierna Derecha
+		//Muslo
+		glTranslatef(-5, 10, -1);
+		glColor3f(0, 1, 0);
+		glPushMatrix();
+		glScalef(2, 5, 2);
+		prisma();
+		glPopMatrix();
+
+		//rodilla
+		glTranslatef(0, -3, 0);
+		glColor3f(1, 0, 0);
+		glPushMatrix();
+		glScalef(2, 1, 2);
+		prisma();
+		glPopMatrix();
+
+		//Espinilla
+		glTranslatef(0, -3, 0);
+		glColor3f(0, 0, 1);
+		glPushMatrix();
+		glScalef(2, 5, 2);
+		prisma();
+		glPopMatrix();
+
+		//Tobillo
+		glTranslatef(0, -2.75, 0);
+		glColor3f(1, 0, 0);
+		glPushMatrix();
+		glScalef(2, 0.5, 2);
+		prisma();
+		glPopMatrix();
+
+		//Pie
+		glTranslatef(0, -1.25, 1);
+		glColor3f(0, 1, 0);
+		glPushMatrix();
+		glScalef(2, 2, 4);
+		prisma();
+		glPopMatrix();
+
+		//Brazo derecho
+		//Hombro
+		glTranslatef(-3, 21.5, -1);
+		glPushMatrix();
+		glRotatef(180, 0, 1, 0);
+		brazoDerecho();
+		glPopMatrix();
+		//Brazo Izquierdo
+		//Hombro
+		glTranslatef(11, 0, 0);
+		brazoIzquierdo();
 		
 
 
@@ -216,7 +674,6 @@ void reshape ( int width , int height )   // Creamos funcion Reshape
 
 	glMatrixMode(GL_PROJECTION);						// Seleccionamos Projection Matrix
 	glLoadIdentity();
-
 	// Tipo de Vista
 	//glOrtho(-5,5,-5,5,0.2,20);	
 	glFrustum (-0.1, 0.1,-0.1, 0.1, 0.1, 100.0);
@@ -226,27 +683,100 @@ void reshape ( int width , int height )   // Creamos funcion Reshape
 
 void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 {
-	switch ( key ) {
-		case 'w':
-		case 'W':
-			transZ +=0.3f;
-			break;
-		case 's':
-		case 'S':
-			transZ -= 0.3f;
-			break;
-		case 'a':
-		case 'A':
-			
-			break;
-		case 'd':
-		case 'D':
-	
-			break;
-		case 27:        // Cuando Esc es presionado...
-			exit ( 0 );   // Salimos del programa
-		break;        
-		default:        // Cualquier otra
+	switch (key) {
+	case 'w':
+	case 'W':
+		transZ += 0.2f;
+		break;
+	case 's':
+	case 'S':
+		transZ -= 0.2f;
+		break;
+	case 'a':
+	case 'A':
+		transX += 0.2f;
+		break;
+	case 'd':
+	case 'D':
+		transX -= 0.2f;
+		break;
+
+	case 'h':
+		if (angHombro <= 80)
+			angHombro += 1;
+		break;
+	case 'H':
+		if (angHombro >= -80)
+			angHombro -= 1;
+		break;
+
+	case 'c':
+		if (angCodo <= 130)
+			angCodo += 1;
+		break;
+	case 'C':
+		if (angCodo >= 1)
+			angCodo -= 1;
+		break;
+
+	case 'm':
+		if (angMuñeca <= 90)
+			angMuñeca += 1;
+		break;
+	case 'M':
+		if (angMuñeca >= -30)
+			angMuñeca -= 1;
+		break;
+
+	case 'u':
+		if (angIndice <= 70)
+			angIndice += 1;
+		break;
+	case 'U':
+		if (angIndice >= 1)
+			angIndice -= 1;
+		break;
+
+	case 'i':
+		if (angMedio <= 70)
+			angMedio += 1;
+		break;
+	case 'I':
+		if (angMedio >= 1)
+			angMedio -= 1;
+		break;
+
+	case 'o':
+		if (angAnular <= 70)
+			angAnular += 1;
+		break;
+	case 'O':
+		if (angAnular >= 1)
+			angAnular -= 1;
+		break;
+
+	case 'p':
+		if (angMeñique <= 70)
+			angMeñique += 1;
+		break;
+	case 'P':
+		if (angMeñique >= 1)
+			angMeñique -= 1;
+		break;
+
+	case 'j':
+		if (angPulgar <= 70)
+			angPulgar += 1;
+		break;
+	case 'J':
+		if (angPulgar >= 1)
+			angPulgar -= 1;
+		break;
+
+	case 27:        // Cuando Esc es presionado...
+		exit(0);   // Salimos del programa
+		break;
+	default:        // 
 		break;
   }
 	glutPostRedisplay();
@@ -256,16 +786,16 @@ void arrow_keys ( int a_keys, int x, int y )  // Funcion para manejo de teclas e
 {
   switch ( a_keys ) {
     case GLUT_KEY_UP:		// Presionamos tecla ARRIBA...
-		rotx += 1;
+		rotx += 0.5;
 		break;
     case GLUT_KEY_DOWN:		// Presionamos tecla ABAJO...
-		rotx -= 1;
+		rotx -= 0.5;
 		break;
 	case GLUT_KEY_LEFT:
-		roty -= 1;
+		roty -= 0.5;
 		break;
 	case GLUT_KEY_RIGHT:
-		roty += 1;
+		roty += 0.5;
 		break;
     default:
       break;
