@@ -1,2 +1,3 @@
 ﻿  main.cpp
+c:\users\c4ris\documents\github\cjmm_casa\pratica1cgcasa\pratica1cg\main.cpp(30): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
   pratica1CG.vcxproj -> C:\Users\c4ris\Documents\GitHub\CJMM_Casa\pratica1CGCasa\Debug\pratica1CG.exe
