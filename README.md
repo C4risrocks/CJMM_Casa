@@ -1,2 +1,2 @@
-# CJMM_Casa
-Repositorio para prácticas realizadas en casa de Laboratorio de Computación Gráfica.
+# CJMM_Clase
+Repositorio para prácticas realizadas durante clase de Laboratorio de Computación Gráfica.
