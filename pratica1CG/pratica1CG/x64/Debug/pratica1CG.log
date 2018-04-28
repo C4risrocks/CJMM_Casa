@@ -1,2 +1,22 @@
-﻿  main.cpp
-c:\users\cg02\desktop\practicascg\pratica1cg\pratica1cg\main.cpp(90): error C2065: 'rot': undeclared identifier
+﻿  texture.cpp
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\texture.cpp(12): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(207): note: see declaration of 'fopen'
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\texture.cpp(48): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\string.h(132): note: see declaration of 'strcpy'
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\texture.cpp(94): warning C4267: '=': conversion from 'size_t' to 'unsigned long', possible loss of data
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\texture.cpp(101): warning C4267: '=': conversion from 'size_t' to 'unsigned long', possible loss of data
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\texture.cpp(121): warning C4267: '=': conversion from 'size_t' to 'unsigned long', possible loss of data
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\texture.cpp(140): warning C4267: '=': conversion from 'size_t' to 'unsigned long', possible loss of data
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\texture.cpp(84): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(207): note: see declaration of 'fopen'
+  main_prac9.cpp
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\main_prac9.cpp(28): warning C4311: 'type cast': pointer truncation from 'void *' to 'int'
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\main_prac9.cpp(28): warning C4302: 'type cast': truncation from 'void *' to 'int'
+  figuras.cpp
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\figuras.cpp(20): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\figuras.cpp(84): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\figuras.cpp(135): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\figuras.cpp(324): warning C4101: 'theta': unreferenced local variable
+c:\users\c4ris\desktop\p9cg\pratica1cg\pratica1cg\p9\figuras.cpp(324): warning C4101: 'phi': unreferenced local variable
+  Camera.cpp
+  Generating Code...

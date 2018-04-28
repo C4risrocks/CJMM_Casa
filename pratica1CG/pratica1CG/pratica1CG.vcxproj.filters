@@ -14,15 +14,27 @@
     <ClInclude Include="include\Main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="p8\texture.h">
+    <ClInclude Include="p9\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="p9\figuras.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="p9\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="p9\main_prac9_texto.cpp">
+    <ClCompile Include="main_prac10new.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="p9\texture.cpp">
+    <ClCompile Include="Camera.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="figuras.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
